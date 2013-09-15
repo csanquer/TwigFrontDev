@@ -1,0 +1,32 @@
+pages:
+  #silex route name = page identifier
+  homepage:
+    #optional name
+    name: homepage
+    #optional description
+    desc: site main homepage
+    #relative url
+    url: /home
+    #default query parameters values
+    default: {}
+    #HTTP method to use default = GET
+    method: GET
+    #twig template
+    template: homepage.html.twig 
+    # scalar variables passed to the twig template
+    variables:
+      app_name: Twig Front Dev
+      
+  article:
+    name: article
+    desc: detailed article page
+    url: /article/{id}
+    default:
+      id: 1
+    method: GET
+    template: article.html.twig 
+    variables:
+      article: 
+        title: fake title
+        body: fake body
+      

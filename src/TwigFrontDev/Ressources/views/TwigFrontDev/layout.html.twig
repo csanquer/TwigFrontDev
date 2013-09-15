@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title '' %}Twig Front Dev mockup</title>
+
+        {% stylesheets 
+            'css/normalize.css'
+            filter='lessphp,cssrewrite,?cssmin' 
+            output='compiled/twig-front-dev/css/main.css'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+          
+        {##
+        {% javascripts 
+            'js/main.js'
+            filter="?jsmin" 
+            output='compiled/twig-front-dev/js/twig-front-dev-main.js' 
+        %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {##}
+            
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>

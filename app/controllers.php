@@ -1,14 +1,15 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use TwigFrontDev\Controller\MockController;
 
 // Exception Error page
 $app->error(function (\Exception $e, $code) use ($app) {
-    if ($app['debug']) {
+//    if ($app['debug']) {
 //        if ($e instanceof Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
 //            $content = vsprintf('<h1>%d - %s (%s)</h1>', array(
 //                $e->getStatusCode(),
@@ -23,8 +24,8 @@ $app->error(function (\Exception $e, $code) use ($app) {
 //            $content = '<h1>An error occured!</h1>';
 //            $code = 200;
 //        }
-        return;
-    }
+//        return;
+//    }
 
     $page = 404 == $code ? '404.html.twig' : '500.html.twig';
 
@@ -35,10 +36,19 @@ $app->error(function (\Exception $e, $code) use ($app) {
  * mount or define custom controllers
  */
 
-$app->get('/', function () use ($app) {
-    return $app['twig']->render('index.html.twig', array());
-})
-->bind('homepage')
-;
+//$app->get('/', function () use ($app) {
+//    return $app['twig']->render('index.html.twig', array());
+//})
+//->bind('homepage')
+//;
+
+$app['mock.controller'] = $app->share(function() use ($app) {
+    return new MockController($app['pages']);
+});
+
+$app->get('/', "mock.controller:indexAction")
+    ->bind('index');
+
+$app['mock.controller']->createMockPagesControllers($app);
 
 //$app->mount('/', );

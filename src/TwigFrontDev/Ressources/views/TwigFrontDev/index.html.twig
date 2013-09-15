@@ -1,0 +1,15 @@
+{% extends "TwigFrontDev/layout.html.twig" %}
+
+{% block content %}
+<h2>Welcome to Twig Front Dev !</h2>
+    
+<p>pages : </p>
+<ul>
+    {% for route, page in pages%}
+    <li>
+        <a href="{{ path(route, page.default) }}" title="{{ page.name is not empty ? page.name ~ ( page.desc is not empty ? "\n" : '' ) : '' }}{{ page.desc is not empty ? page.desc  : '' }}">/{{ path(route, page.default, true) }}</a> 
+    </li>
+    {% endfor%}
+</ul>
+    
+{% endblock %}

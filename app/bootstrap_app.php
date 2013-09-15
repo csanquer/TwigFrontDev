@@ -92,6 +92,7 @@ foreach ($cacheDirectories as $dir) {
 $configFiles = array(
     'config',
     'config_'.$app['env'],
+    'pages',
 );
 
 $configFormats = array(
@@ -126,6 +127,9 @@ foreach ($configFiles as $configFile) {
         $config = array_replace_recursive($config, $conf);
     }
 }
+
+// mockup pages config
+$app['pages'] = isset($config['pages']) ? $config['pages'] : array();
 
 /*
  * add service providers
@@ -206,6 +210,7 @@ $app['translator'] = $app->share($app->extend('translator', function($translator
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => array(
         __DIR__.'/views',
+        __DIR__.'/../src/TwigFrontDev/Ressources/views',
     ),
 //        'twig.templates' => array(),
     'twig.options' => array(
