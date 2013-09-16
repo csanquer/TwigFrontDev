@@ -1,5 +1,6 @@
 {
     "name": "csanquer/twig-front-dev",
+    "type": "project",
     "description": "a silex ready application to design directly twig mockups",
     "authors": [
         {
