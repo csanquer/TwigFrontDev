@@ -20,9 +20,25 @@ class MockController
 
     public function __construct($pages)
     {
-        $this->pages = (array) $pages;
+        $this->pages = $this->checkAllPagesConfig((array) $pages);
     }
 
+    /**
+     * check all mock pages configuration
+     * 
+     * @param array $pagesConfig
+     * 
+     * @return array
+     */
+    protected function checkAllPagesConfig(array $pagesConfig) 
+    {
+        $cleanPagesConfig = array();
+        foreach ($pagesConfig as $route => $config) {
+            $cleanPagesConfig[$route] = $this->checkPageConfig($config);
+        }
+        return $cleanPagesConfig;
+    }
+    
     /**
      * check mock page configuration
      * 
@@ -89,8 +105,6 @@ class MockController
     public function createMockPagesControllers(Application $app)
     {
         foreach ($this->pages as $route => $config) {
-            $config = $this->checkPageConfig($config);
-            
             call_user_func(array($app, $config['method']), $config['url'], function (Request $request, Application $app) use ($config) {
                 $variables = array_merge($request->get('_route_params'), $config['variables']);
                 

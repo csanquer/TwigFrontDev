@@ -8,7 +8,7 @@ pages:
     #relative url
     url: /home
     #default query parameters values
-    default: {}
+    default: 
     #HTTP method to use default = GET
     method: GET
     #twig template
@@ -29,4 +29,4 @@ pages:
       article: 
         title: fake title
         body: fake body
-      
+
