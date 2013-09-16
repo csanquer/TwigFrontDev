@@ -32,7 +32,6 @@ class MockController
      */
     protected function checkPageConfig(array $config)
     {
-        var_dump($config);
         $config = array_merge(array(
             'name' => '',
             'desc' => '',
