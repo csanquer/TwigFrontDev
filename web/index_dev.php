@@ -12,4 +12,4 @@ define('DS', DIRECTORY_SEPARATOR);
 define('SILEX_ENV', 'dev');
 define('SILEX_DEBUG', true);
 
-require __DIR__.DS.'..'.DS.'app'.DS.'app.php';
+require __DIR__.DS.'..'.DS.'src'.DS.'app.php';

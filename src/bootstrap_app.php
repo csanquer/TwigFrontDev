@@ -64,11 +64,12 @@ $app['debug'] = (bool) SILEX_DEBUG;
 $app['env'] = SILEX_ENV;
 
 // define main paths
-$app['app_dir'] = realpath(__DIR__);
-$app['root_dir'] = realpath($app['app_dir'].DS.'..');
+$app['app_dir'] = realpath(__DIR__.DS.'..');
+$app['root_dir'] = $app['app_dir'];
+$app['config_dir'] = $app['app_dir'].DS.'config';
 $app['web_dir'] = $app['root_dir'].DS.'web';
-$app['log_dir'] = $app['app_dir'].DS.'logs';
-$app['cache_dir'] = $app['app_dir'].DS.'cache';
+$app['log_dir'] = $app['app_dir'].DS.'var'.DS.'logs';
+$app['cache_dir'] = $app['app_dir'].DS.'var'.DS.'cache';
 $app['translations_dir'] = $app['app_dir'].DS.'translations';
 
 //create cache and logs directories
@@ -107,7 +108,7 @@ $configFormats = array(
 $app->register(
     new WiseServiceProvider(),
     array(
-        'wise.path' => $app['app_dir'].DS.'config',
+        'wise.path' => $app['config_dir'],
         'wise.cache_dir' => $app['cache_dir'].DS.'config',
         'wise.options' => array(
             'parameters' => $app
@@ -119,7 +120,7 @@ $config = array();
 foreach ($configFiles as $configFile) {
     $conf = array();
     foreach ($configFormats as $configFormat) {
-        if ($fs->exists($app['app_dir'].DS.'config'.DS.$configFile.'.'.$configFormat)) {
+        if ($fs->exists($app['config_dir'].DS.$configFile.'.'.$configFormat)) {
             $conf = $app['wise']->load($configFile.'.'.$configFormat);
         }
     }
@@ -210,8 +211,8 @@ $app['translator'] = $app->share($app->extend('translator', function($translator
 // add twig templating
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => array(
-        __DIR__.'/views',
-        __DIR__.'/../src/TwigFrontDev/Ressources/views',
+        $app['app_dir'].'/views',
+        $app['app_dir'].'/src/TwigFrontDev/Ressources/views',
     ),
 //        'twig.templates' => array(),
     'twig.options' => array(
