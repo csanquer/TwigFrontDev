@@ -1,28 +1,89 @@
 <!DOCTYPE html>
-<html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en" > 
+<!--<![endif]-->
+
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
         <title>{% block title '' %}Twig Front Dev mockup</title>
 
-        {% stylesheets 
-            'css/normalize.css'
-            filter='lessphp,cssrewrite,?cssmin' 
-            output='compiled/twig-front-dev/css/main.css'
-        %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
+    {% stylesheets 
+        'TwigFrontDev/css/normalize.css'
+        'TwigFrontDev/css/foundation.css'
+        filter='cssrewrite' 
+        output='compiled/twig-front-dev/css/main.css'
+    %}
+        <link rel="stylesheet" href="/{{ asset_url }}" />
+    {% endstylesheets %}
           
-        {##
-        {% javascripts 
-            'js/main.js'
-            filter="?jsmin" 
-            output='compiled/twig-front-dev/js/twig-front-dev-main.js' 
-        %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        {##}
+    {% javascripts 
+        'TwigFrontDev/js/vendor/custom.modernizr.js'
+        output='compiled/twig-front-dev/js/modernizr.js' 
+    %}
+        <script src="/{{ asset_url }}"></script>
+    {% endjavascripts %}
             
     </head>
     <body>
         {% block content %}{% endblock %}
+        
+        <script>
+if ('__proto__' in {}) {
+    {% javascripts 
+        'TwigFrontDev/js/vendor/zepto.js'
+        filter="" 
+        output='compiled/twig-front-dev/js/zepto.js' 
+    %}
+       var jsAlt ="/{{ asset_url }}";
+    {% endjavascripts %}
+} else {
+     {% javascripts 
+        'TwigFrontDev/js/vendor/jquery.js'
+        filter="" 
+        output='compiled/twig-front-dev/js/jquery.js' 
+    %}
+       var jsAlt ="/{{ asset_url }}";
+    {% endjavascripts %}
+}
+document.write('<script src="' + jsAlt + '"><\/script>')
+        </script>
+    {##
+    {% javascripts 
+        'TwigFrontDev/js/foundation.min.js'
+        filter="?jsmin" 
+        output='compiled/twig-front-dev/js/twig-front-dev-main.js' 
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {##}
+    
+    {% javascripts 
+        'TwigFrontDev/js/foundation/foundation.js'
+        'TwigFrontDev/js/foundation/foundation.alerts.js'
+        'TwigFrontDev/js/foundation/foundation.clearing.js'
+        'TwigFrontDev/js/foundation/foundation.cookie.js'
+        'TwigFrontDev/js/foundation/foundation.dropdown.js'
+        'TwigFrontDev/js/foundation/foundation.forms.js'
+        'TwigFrontDev/js/foundation/foundation.joyride.js'
+        'TwigFrontDev/js/foundation/foundation.magellan.js'
+        'TwigFrontDev/js/foundation/foundation.orbit.js'
+        'TwigFrontDev/js/foundation/foundation.reveal.js'
+        'TwigFrontDev/js/foundation/foundation.section.js'
+        'TwigFrontDev/js/foundation/foundation.tooltips.js'
+        'TwigFrontDev/js/foundation/foundation.topbar.js'
+        'TwigFrontDev/js/foundation/foundation.interchange.js'
+        'TwigFrontDev/js/foundation/foundation.placeholder.js'
+        'TwigFrontDev/js/foundation/foundation.abide.js'
+        filter="" 
+        output='compiled/twig-front-dev/js/foundation.js' 
+    %}
+        <script src="/{{ asset_url }}"></script>
+    {% endjavascripts %}
+  
+  <script>
+    $(document).foundation();
+  </script>
     </body>
 </html>
