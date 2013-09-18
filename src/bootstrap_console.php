@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\ArgvInput;
 
 
-$console = new Application($app, __DIR__.'/..', 'Twig Front Dev Application', 'n/a', '', 'config', 'web', 'var'.DS.'cache', 'var'.DS.'logs');
+$console = new Application($app, __DIR__.'/..', 'Twig Front Dev Application', 'n/a', '');
 $console->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', 'dev'));
 $console->getDefinition()->addOption(new InputOption('--no-debug', null, InputOption::VALUE_NONE, 'disabling debug'));
 

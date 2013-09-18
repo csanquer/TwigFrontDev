@@ -73,11 +73,13 @@ $app['env'] = SILEX_ENV;
 // define main paths
 $app['app_dir'] = realpath(__DIR__.DS.'..');
 $app['root_dir'] = $app['app_dir'];
+$app['var_dir'] = $app['root_dir'].DS.'var';
 $app['config_dir'] = $app['app_dir'].DS.'config';
-$app['web_dir'] = $app['root_dir'].DS.'web';
-$app['log_dir'] = $app['app_dir'].DS.'var'.DS.'logs';
-$app['cache_dir'] = $app['app_dir'].DS.'var'.DS.'cache';
 $app['translations_dir'] = $app['app_dir'].DS.'translations';
+$app['web_dir'] = $app['root_dir'].DS.'web';
+$app['bin_dir'] = $app['root_dir'].DS.'bin';
+$app['log_dir'] = $app['var_dir'].DS.'logs';
+$app['cache_dir'] = $app['var_dir'].DS.'cache';
 
 //create cache and logs directories
 $cacheDirectories = array(
