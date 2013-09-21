@@ -4,6 +4,7 @@ namespace TwigFrontDev\Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
@@ -54,14 +55,22 @@ class MockController
             'url' => '',
             'default' => array(),
             'method' => 'get',
+            'format' => 'html',
+            'status' => 200,
             'template' => '',
             'variables' => array(),
         ), $config);
 
+        $config['status'] = (int) $config['status'];
+        
         $method = !empty($config['method']) ? strtolower($config['method']) : 'get';
         $method = in_array($method, array('get', 'post', 'put', 'delete')) ? $method : 'get';
         $config['method'] = $method;
 
+        if (!isset($config['variables']) || !is_array($config['variables'])) {
+            $config['variables'] = array();
+        }
+        
         if (!isset($config['default']) || !is_array($config['default'])) {
             $config['default'] = array();
         }
@@ -78,29 +87,34 @@ class MockController
                 }
             }
         }
-
+        
         return $config;
     }
     
     /**
      * Mock pages list
      * 
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Silex\Application $app
+     * @param Request $request
+     * @param Application $app
      * 
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction(Request $request, Application $app)
     {
-        return $app['twig']->render('TwigFrontDev/index.html.twig', array(
-            'pages' => $this->pages
-        ));
+        return new Response(
+            $app['twig']->render(
+                'TwigFrontDev/index.html.twig', 
+                array(
+                    'pages' => $this->pages
+                )
+            )
+        );
     }
 
     /**
      * create all mock pages controllers
      * 
-     * @param \Silex\Application $app
+     * @param Application $app
      */
     public function createMockPagesControllers(Application $app)
     {
@@ -108,7 +122,47 @@ class MockController
             call_user_func(array($app, $config['method']), $config['url'], function (Request $request, Application $app) use ($config) {
                 $variables = array_merge($request->get('_route_params'), $config['variables']);
                 
-                return $app['twig']->render($config['template'], $variables);
+                $headers = array();
+                switch ($config['format']) {
+                    case 'javascript':
+                    case 'js':
+                        $headers['Content-Type'] = 'application/javascript';
+                        break;
+                    case 'json':
+                        $headers['Content-Type'] = 'application/json';
+                        break;
+                    case 'css':
+                        $headers['Content-Type'] = 'text/css';
+                        break;
+                    case 'rdf':
+                        $headers['Content-Type'] = 'application/rdf+xml';
+                        break;
+                    case 'atom':
+                        $headers['Content-Type'] = 'application/atom+xml';
+                        break;
+                    case 'rss':
+                        $headers['Content-Type'] = 'application/rss+xml';
+                        break;
+                    case 'xsl':
+                    case 'xsd':
+                    case 'xliff':
+                    case 'xml':
+                        $headers['Content-Type'] = 'text/xml';
+                        break;
+                    case 'txt':
+                        $headers['Content-Type'] = 'text/plain';
+                        break;
+                    case 'html':
+                    default:
+                        $headers['Content-Type'] = 'text/html';
+                        break;
+                }
+                
+                return new Response(
+                    $app['twig']->render($config['template'], $variables),
+                    $config['status'] ?: 200,
+                    $headers
+                );
             })->bind($route);
         }
     }

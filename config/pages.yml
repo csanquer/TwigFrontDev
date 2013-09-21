@@ -9,8 +9,12 @@ pages:
     url: /home
     #default query parameters values
     default: 
-    #HTTP method to use default = GET
-    method: GET
+    #HTTP method to use (default = GET)
+#    method: GET
+    #HTTP status code (default = 200)
+#    status: 200
+    #document format (default = html) ex : html , xml , css , js, json, xml , atom , rss etc ... 
+#    format: html
     #twig template
     template: homepage.html.twig 
     # scalar variables passed to the twig template
@@ -29,4 +33,19 @@ pages:
       article: 
         title: fake title
         body: fake body
+        
+  book:
+    name: book
+    desc: detailed book page
+    url: /book/{id}
+    default:
+      id: 1
+    format: json
+    method: GET
+    status: 301
+    template: book.json.twig 
+    variables:
+      book: 
+        title: fake book title
+        body: fake book body
 
