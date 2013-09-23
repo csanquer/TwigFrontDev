@@ -26,9 +26,9 @@ recommended but _optional_
 Install 
 -------
 
-see [doc/index.md](https://github.com/csanquer/TwigFrontDev/blob/master/doc/install.md)
+see [doc/install.md](https://github.com/csanquer/TwigFrontDev/blob/master/doc/install.md)
 
 Usage
 -----
 
-see [doc/index.md](https://github.com/csanquer/TwigFrontDev/blob/master/doc/usage.md)
+see [doc/usage.md](https://github.com/csanquer/TwigFrontDev/blob/master/doc/usage.md)
