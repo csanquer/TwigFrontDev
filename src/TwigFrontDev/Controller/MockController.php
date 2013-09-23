@@ -81,7 +81,7 @@ class MockController
                 if (!empty($params)) {
                     $defaultParams = array();
                     foreach ($params as $param) {
-                        $defaultParams[$param] = '';
+                        $defaultParams[$param] = 1;
                     }
                     $config['default'] = array_merge($defaultParams, $config['default']);
                 }

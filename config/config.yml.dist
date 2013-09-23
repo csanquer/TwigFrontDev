@@ -1,17 +1,22 @@
+# csrf form secret
 form_secret: 4fws6dg4w6df4<qg4sh4646qfgsd4
 
 i18n:
+  # default language
   locale_fallback: fr
+  # availables translation files
+  # ex messages.fr.yml
+  domains:
+    - messages
+    - validators
   languages: 
     - fr
     - en
   formats: 
     - yml
 #   - xliff
-  domains:
-    - messages
-    - validators
 
+# twig global variables
 twig:
     variables:
 #        foo: bar
